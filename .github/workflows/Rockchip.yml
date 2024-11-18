@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  OPNAME: 'FriendlyElec NanoPi R4S'
+  OPNAME: 'NanoPi R4S'
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
@@ -146,8 +146,8 @@ jobs:
       if: steps.compile.outputs.status == 'success' && !cancelled()
       run: |
         echo "![](https://img.shields.io/github/downloads/${{ github.repository }}/${{ steps.tag.outputs.release_tag }}/total?style=flat-square)" >> release.txt
-        echo "- 自用 NanoPi R4S 固件 " >> release.txt
         echo "- 内核版本: ${{ env.KERNEL }}" >> release.txt
+        echo "- 编译完成时间: ${{ env.FILE_DATE }} " >> release.txt
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v2
