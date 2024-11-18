@@ -30,7 +30,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.3.4
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-          keep_latest: 10  # 保留最新的 18 个版本
+          keep_latest: 10  # 保留最新的 10 个版本
           delete_tags: true  # 删除相关的标签（可选）
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub Token 进行身份验证
