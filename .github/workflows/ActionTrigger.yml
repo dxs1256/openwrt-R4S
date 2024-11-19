@@ -34,27 +34,3 @@ jobs:
           delete_tags: true  # 删除相关的标签（可选）
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub Token 进行身份验证
-
-    - name: Trigger Rockchip Workflow
-      if: always()  # 确保该步骤总是执行
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-          const owner = github.context.repo.owner;
-          const repo = github.context.repo.repo;
-          const workflowId = 'Rockchip.yml'; // 将此更改为你仓库中工作流的文件名
-          try {
-             const response = await octokit.actions.createWorkflowDispatch({
-               owner,
-               repo,
-               workflow_id: workflowId,
-               inputs: {}, // 可以传递输入参数
-             });
-             console.log('Workflow triggered successfully:', response.data);
-          } catch (error) {
-             console.error('Failed to trigger workflow:', error);
-             core.setFailed(error.message); // 非常重要，标记该步骤失败
-          }
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
