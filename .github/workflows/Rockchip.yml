@@ -1,8 +1,9 @@
 name: Rockchip
 
 on:
-  repository_dispatch:
   workflow_dispatch:
+  schedule:
+    - cron: '0 16 */3 * *'
 
 env:
   OPNAME: 'NanoPi R4S'
