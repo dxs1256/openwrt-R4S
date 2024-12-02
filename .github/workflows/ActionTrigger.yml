@@ -21,8 +21,9 @@ jobs:
     - name: Trigger Rockchip workflow
       run: |
         curl -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Authorization: Bearer ${{ secrets.TRIGGER_TOKEN }}" \
           -d '{"event_type": "Build-OpenWrts"}'
+
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
