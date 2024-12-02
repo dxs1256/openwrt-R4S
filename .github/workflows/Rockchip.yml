@@ -1,9 +1,8 @@
 name: Rockchip
 
 on:
-  workflow_dispatch:
   repository_dispatch:
-    types: [Build-OpenWrts]  # 这里的事件类型需要和上面一致
+    types: [Build-OpenWrts]  # 监听来自 ActionTrigger 的自定义事件
 
 env:
   OPNAME: 'NanoPi R4S'
