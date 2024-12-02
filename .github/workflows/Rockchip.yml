@@ -19,6 +19,9 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
+  WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'
+  WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
+  WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 存储你的用户ID
 
 jobs:
   build:
@@ -106,6 +109,22 @@ jobs:
         echo "DEVICE_NAME=NanoPi R4S" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
+    - name: Get Kernel version
+      id: kernel_version
+      run: |
+        KERNEL_VERSION=$(cat openwrt/bin/targets/*/*/*.manifest | grep ^kernel | cut -d- -f2 | tr -d ' ')
+        echo "KERNEL_VERSION=$KERNEL_VERSION" >> $GITHUB_ENV
+        echo "Kernel version: $KERNEL_VERSION"
+
+    - name: Send kernel version to wxPusher
+      if: steps.kernel_version.outputs.KERNEL_VERSION != ''
+      run: |
+        curl -X POST ${{ env.WXPUSHER_URL }} \
+          -d 'app_token=${{ env.WXPUSHER_APP_TOKEN }}' \
+          -d 'content=内核版本: ${{ env.KERNEL_VERSION }}' \
+          -d 'summary=OpenWrt 编译完成' \
+          -d 'uids=${{ env.WXPUSHER_USER_IDS }}'
+
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
@@ -138,7 +157,7 @@ jobs:
       id: tag
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "== Time：$(date +'%Y-%m-%d %H:%M:%S') =="
+        echo "== Time：$(date +'%Y-%m-%d %H:%M:%S') ==" 
         echo "release_tag=$(date +"%Y.%m.%d-%H%M%S")" >> $GITHUB_OUTPUT
         touch release.txt
         echo "status=success" >> $GITHUB_OUTPUT
