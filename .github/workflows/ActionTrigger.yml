@@ -20,6 +20,9 @@ jobs:
       
     - name: AutoTrigger
       uses: bigbugcc/ActionBot@main
+      with:
+        trigger_workflow: 'Rockchip.yaml' # 触发的工作流名称
+        trigger_event: 'Build-OpenWrts'  # 自定义事件类型
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
