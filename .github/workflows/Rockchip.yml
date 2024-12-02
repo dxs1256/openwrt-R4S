@@ -3,7 +3,7 @@ name: Rockchip
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [build-triggered]  # 这里的事件类型需要和上面一致
+    types: [Build-OpenWrts]  # 这里的事件类型需要和上面一致
 
 env:
   OPNAME: 'NanoPi R4S'
