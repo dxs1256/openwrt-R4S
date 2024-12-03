@@ -128,12 +128,18 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
-    - name: Upload bin directory
-      uses: actions/upload-artifact@main
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt/bin
+    # 删除上传到 artifacts 的步骤
+    # - name: Upload bin directory
+    #   if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+    #   with:
+    #     name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+    #     path: openwrt/bin
+
+    # - name: Upload firmware directory
+    #   if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+    #   with:
+    #     name: OpenWrt_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
+    #     path: ${{ env.FIRMWARE }}
 
     - name: Organize files
       id: organize
@@ -144,13 +150,6 @@ jobs:
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
-
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@main
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      with:
-        name: OpenWrt_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE }}
 
     - name: Generate release tag
       id: tag
