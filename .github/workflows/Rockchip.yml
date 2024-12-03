@@ -120,7 +120,7 @@ jobs:
       run: |
         curl -X POST ${{ env.WXPUSHER_URL }} \
           -d 'app_token=${{ env.WXPUSHER_APP_TOKEN }}' \
-          -d 'content=内核版本: ${{ env.KERNEL_VERSION }}' \
+          -d 'content=内核版本: ${{ env.KERNEL }}' \
           -d 'summary=OpenWrt 编译完成' \
           -d 'uids=${{ env.WXPUSHER_USER_IDS }}'
 
