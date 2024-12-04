@@ -129,15 +129,6 @@ jobs:
         echo "KERNEL_VERSION=$KERNEL_VERSION" >> $GITHUB_ENV
         echo "Kernel version: $KERNEL_VERSION"
 
-    - name: Send kernel version to wxPusher
-      if: env.KERNEL_VERSION != ''
-      run: |
-        curl -X POST ${{ env.WXPUSHER_URL }} \
-          -d 'app_token=${{ env.WXPUSHER_APP_TOKEN }}' \
-          -d 'content=内核版本: ${{ env.KERNEL_VERSION }}' \
-          -d 'summary=OpenWrt 编译完成' \
-          -d 'uids=${{ env.WXPUSHER_USER_IDS }}'
-
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
@@ -167,6 +158,15 @@ jobs:
         echo "![](https://img.shields.io/github/downloads/${{ github.repository }}/${{ steps.tag.outputs.release_tag }}/total?style=flat-square)" >> release.txt
         echo "- 内核版本: ${{ env.KERNEL }}" >> release.txt
         echo "- 编译完成时间: ${{ env.FILE_DATE }} " >> release.txt
+
+    - name: Send kernel version to wxPusher
+      if: env.KERNEL_VERSION != ''
+      run: |
+        curl -X POST ${{ env.WXPUSHER_URL }} \
+          -d 'app_token=${{ env.WXPUSHER_APP_TOKEN }}' \
+          -d 'content=内核版本: ${{ env.KERNEL }}' \
+          -d 'summary=OpenWrt 编译完成' \
+          -d 'uids=${{ env.WXPUSHER_USER_IDS }}'
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v2
