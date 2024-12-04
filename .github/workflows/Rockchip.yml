@@ -130,11 +130,11 @@ jobs:
         echo "Kernel version: $KERNEL_VERSION"
 
     - name: Send kernel version to wxPusher
-      if: steps.kernel_version.outputs.KERNEL_VERSION != ''
+      if: env.KERNEL_VERSION != ''
       run: |
         curl -X POST ${{ env.WXPUSHER_URL }} \
           -d 'app_token=${{ env.WXPUSHER_APP_TOKEN }}' \
-          -d 'content=内核版本: ${{ env.KERNEL }}' \
+          -d 'content=内核版本: ${{ env.KERNEL_VERSION }}' \
           -d 'summary=OpenWrt 编译完成' \
           -d 'uids=${{ env.WXPUSHER_USER_IDS }}'
 
