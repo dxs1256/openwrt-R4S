@@ -34,7 +34,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* 
+        sudo rm -rf /etc/apt/sources.list.d/*
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL https://raw.githubusercontent.com/bigbugcc/openwrts/master/openwrt-env)
         sudo -E apt-get -qq autoremove --purge
@@ -54,11 +54,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          /mnt/workdir/openwrt/bin/
           /mnt/workdir/openwrt/dl/
           /mnt/workdir/openwrt/staging/
           /mnt/workdir/openwrt/build_dir/
-          /mnt/workdir/openwrt/tmp/
         key: ${{ runner.os }}-openwrt-${{ hashFiles('**/feeds.conf.default', '**/config*', '**/makefile') }}
         restore-keys: |
           ${{ runner.os }}-openwrt-
@@ -156,10 +154,13 @@ jobs:
       if: env.KERNEL != ''
       run: |
         curl -X POST ${{ env.WXPUSHER_URL }} \
-          -d 'app_token=${{ env.WXPUSHER_APP_TOKEN }}' \
-          -d 'content=内核版本: ${{ env.KERNEL }}' \
-          -d 'summary=OpenWrt 编译完成' \
-          -d 'uids=${{ env.WXPUSHER_USER_IDS }}'
+          -H "Content-Type: application/json" \
+          -d '{
+            "appToken": "${{ env.WXPUSHER_APP_TOKEN }}",
+            "content": "内核版本: ${{ env.KERNEL }}",
+            "summary": "OpenWrt 编译完成",
+            "uids": "${{ env.WXPUSHER_USER_IDS }}"
+          }'
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v2
