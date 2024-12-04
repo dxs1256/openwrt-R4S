@@ -50,12 +50,26 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /mnt/workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
-    - name: Cache
-      uses: stupidloud/cachewrtbuild@main
+    - name: Cache build dependencies and downloaded files
+      uses: actions/cache@v3
       with:
-          ccache: 'true'
-          mixkey: 'armv8'
-          prefix: 'openwrt'
+        path: |
+          /mnt/workdir/openwrt/bin/
+          /mnt/workdir/openwrt/dl/
+          /mnt/workdir/openwrt/staging/
+          /mnt/workdir/openwrt/build_dir/
+          /mnt/workdir/openwrt/tmp/
+        key: ${{ runner.os }}-openwrt-${{ hashFiles('**/feeds.conf.default', '**/config*', '**/makefile') }}
+        restore-keys: |
+          ${{ runner.os }}-openwrt-
+
+    - name: Cache ccache
+      uses: actions/cache@v3
+      with:
+        path: /mnt/workdir/openwrt/.ccache
+        key: ${{ runner.os }}-ccache-${{ hashFiles('**/*.c', '**/*.cpp', '**/*.h', '**/*.make') }}
+        restore-keys: |
+          ${{ runner.os }}-ccache-
 
     - name: Load custom feeds
       run: |
@@ -127,19 +141,6 @@ jobs:
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
-
-    # 删除上传到 artifacts 的步骤
-    # - name: Upload bin directory
-    #   if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-    #   with:
-    #     name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-    #     path: openwrt/bin
-
-    # - name: Upload firmware directory
-    #   if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-    #   with:
-    #     name: OpenWrt_${{ env.DEVICE_NAME }}_${{ env.FILE_DATE }}
-    #     path: ${{ env.FIRMWARE }}
 
     - name: Organize files
       id: organize
