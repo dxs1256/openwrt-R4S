@@ -23,9 +23,9 @@ jobs:
       run: |
         curl -X POST $WXPUSHER_URL \
           -H "Content-Type: application/json" \
-          -d "{
-            \"appToken\": \"$WXPUSHER_APP_TOKEN\",
-            \"content\": \"内核版本: $KERNEL_VERSION\",
-            \"summary\": \"OpenWrt 编译完成\",
-            \"uids\": $WXPUSHER_USER_IDS
-          }"
+          -d '{
+            "appToken": "'"$WXPUSHER_APP_TOKEN"'",
+            "content": "内核版本: '"$KERNEL_VERSION"'",
+            "summary": "OpenWrt 编译完成",
+            "uids": '"$WXPUSHER_USER_IDS"'
+          }'
