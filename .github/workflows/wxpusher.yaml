@@ -21,7 +21,6 @@ jobs:
       run: |
         # URL encode 对特殊字符进行编码
         ENCODED_CONTENT=$(echo "内核版本: $KERNEL_VERSION" | jq -sRr @uri)
-        ENCODED_URL=$(echo "http://wxpusher.zjiecode.com" | jq -sRr @uri)
 
         # 拼接 URL 和查询字符串，发送消息
-        curl -X GET "$WXPUSHER_URL?appToken=$WXPUSHER_APP_TOKEN&content=$ENCODED_CONTENT&uid=$WXPUSHER_USER_IDS&url=$ENCODED_URL"
+        curl -X GET "$WXPUSHER_URL?appToken=$WXPUSHER_APP_TOKEN&content=$ENCODED_CONTENT&uid=$WXPUSHER_USER_IDS"
