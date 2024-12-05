@@ -13,19 +13,11 @@ jobs:
 
     - name: Send kernel version to wxPusher
       env:
-        WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'
+        WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message/'
         WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}  # 使用 Secrets 存储 App Token
         WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 使用 Secrets 存储 User IDs
         KERNEL_VERSION: '5.10.45'  # 内核版本，可以替换为你想发送的内容
         SUMMARY: 'OpenWrt 编译完成'
       run: |
-        # 发送 wxPusher 消息
-        curl -X POST $WXPUSHER_URL \
-          -H "Content-Type: application/json" \
-          -d '{
-            "appToken": "'"$WXPUSHER_APP_TOKEN"'",
-            "content": "内核版本: '"$KERNEL_VERSION"'",
-            "summary": "'"$SUMMARY"'",
-            "contentType": 3,
-            "uids": '"$WXPUSHER_USER_IDS"'
-          }' 
+        # 拼接 URL 和查询字符串，发送消息
+        curl -X GET "$WXPUSHER_URL?appToken=$WXPUSHER_APP_TOKEN&content=内核版本: $KERNEL_VERSION&uid=$WXPUSHER_USER_IDS&url=http://wxpusher.zjiecode.com"
