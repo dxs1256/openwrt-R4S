@@ -1,10 +1,7 @@
 name: Test wxPusher Notification
 
 on:
-  push:
-    branches:
-      - main  # 你可以根据需要修改为其他分支
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:  # 允许手动触发工作流
 
 jobs:
   send_notification:
@@ -12,20 +9,23 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3  # 确保使用最新版本的动作
+      uses: actions/checkout@v4
 
     - name: Send kernel version to wxPusher
       env:
-        WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'  # 确保URL正确
+        WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'
         WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}  # 使用 Secrets 存储 App Token
         WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 使用 Secrets 存储 User IDs
-        KERNEL_VERSION: '5.10.45'  # 可根据需要修改
+        KERNEL_VERSION: '5.10.45'  # 内核版本，可以替换为你想发送的内容
+        SUMMARY: 'OpenWrt 编译完成'
       run: |
+        # 发送 wxPusher 消息
         curl -X POST $WXPUSHER_URL \
           -H "Content-Type: application/json" \
           -d '{
             "appToken": "'"$WXPUSHER_APP_TOKEN"'",
             "content": "内核版本: '"$KERNEL_VERSION"'",
-            "summary": "OpenWrt 编译完成",
-            "uids": JSON.parse('"['${WXPUSHER_USER_IDS//,/'}']"')
-          }'
+            "summary": "'"$SUMMARY"'",
+            "contentType": 3,
+            "uids": '"$WXPUSHER_USER_IDS"'
+          }' 
