@@ -154,8 +154,6 @@ jobs:
       if: env.KERNEL != ''
       env:
         WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message/'
-        WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}  # 使用 Secrets 存储 App Token
-        WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 使用 Secrets 存储 User IDs
         SUMMARY: 'OpenWrt 编译完成'
       run: |
         # URL encode 对特殊字符进行编码
