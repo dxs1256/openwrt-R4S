@@ -25,6 +25,9 @@ jobs:
         CONTENT="123"
         URL="http%3a%2f%2fwxpusher.zjiecode.com"  # URL 编码后的链接
 
+        # 打印 uid，检查是否正确传递
+        echo "Sending message to UID: ${WXPUSHER_USER_ID}"
+
         # 发送 GET 请求到指定用户
         curl -G "$WXPUSHER_URL" \
           --data-urlencode "appToken=${WXPUSHER_APP_TOKEN}" \
