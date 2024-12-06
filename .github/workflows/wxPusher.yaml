@@ -32,5 +32,5 @@ jobs:
         curl -G "$WXPUSHER_URL" \
           --data-urlencode "appToken=${WXPUSHER_APP_TOKEN}" \
           --data-urlencode "content=${CONTENT}" \
-          --data-urlencode "uid=${WXPUSHER_USER_ID}" \
+          --data-urlencode "uid=${WXPUSHER_USER_IDS}" \
           --data-urlencode "url=${URL}"
