@@ -19,7 +19,7 @@ jobs:
       env:
         WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'
         WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}  # 你的 WXPUSHER 应用 token
-        WXPUSHER_USER_ID: ${{ secrets.WXPUSHER_USER_IDS }}  # 你的用户 ID
+        WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 你的用户 ID
       run: |
         # 设置要发送的消息内容
         CONTENT="123"
