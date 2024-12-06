@@ -1,11 +1,9 @@
 name: Send Message via GET API
 
 on:
-  # 你可以根据需要设置触发条件
   push:
     branches:
       - main
-  # 你也可以设置按时间间隔定时触发
   schedule:
     - cron: '0 9 * * *'  # 每天 9 点触发
 
@@ -18,14 +16,18 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Send GET request via API
+      env:
+        WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'
+        WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}  # 你的 WXPUSHER 应用 token
+        WXPUSHER_USER_ID: ${{ secrets.WXPUSHER_USER_ID }}  # 你的用户 ID
       run: |
-        APP_TOKEN="AT_qHT0cTQfLwYOlBV9cJj9zDSyEmspsmyM"
-        CONTENT="Hello World"
-        UID="c1BcpqxEbD8irqlGUh9BhOqR2BvH8yWZ"
-        URL="http%3a%2f%2fwxpusher.zjiecode.com"  # URL编码后的链接
+        # 设置要发送的消息内容
+        CONTENT="123"
+        URL="http%3a%2f%2fwxpusher.zjiecode.com"  # URL 编码后的链接
 
-        curl -G "https://wxpusher.zjiecode.com/api/send/message/" \
-          --data-urlencode "appToken=${APP_TOKEN}" \
+        # 发送 GET 请求到指定用户
+        curl -G "$WXPUSHER_URL" \
+          --data-urlencode "appToken=${WXPUSHER_APP_TOKEN}" \
           --data-urlencode "content=${CONTENT}" \
-          --data-urlencode "uid=${UID}" \
+          --data-urlencode "uid=${WXPUSHER_USER_ID}" \
           --data-urlencode "url=${URL}"
