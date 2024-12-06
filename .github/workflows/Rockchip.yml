@@ -18,7 +18,6 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'
   WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
   WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}
 
