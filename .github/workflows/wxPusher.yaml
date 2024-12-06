@@ -15,23 +15,16 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
-    - name: Send GET request via API
-      env:
-        WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'
-        WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}  # 你的 WXPUSHER 应用 token
-        WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 你的用户 ID
+    - name: Send kernel version to wxPusher
+      if: steps.kernel_version.outputs.KERNEL_VERSION != ''
       run: |
-        # 设置要发送的消息内容
-        SUMMARY="标题吗"
-        CONTENT="123"
-        URL="http%3a%2f%2fwxpusher.zjiecode.com"  # URL 编码后的链接
+        # 打印要发送的内容，检查变量是否正确
+        echo "Sending kernel version: ${{ steps.kernel_version.outputs.KERNEL_VERSION }}"
+        echo "App token: ${{ secrets.WXPUSHER_APP_TOKEN }}"
 
-        # 打印 uid，检查是否正确传递
-        echo "Sending message to UID: ${WXPUSHER_USER_IDS}"
-
-        # 发送 GET 请求到指定用户
-        curl -G "$WXPUSHER_URL" \
-          --data-urlencode "appToken=${WXPUSHER_APP_TOKEN}" \
-          --data-urlencode "content=${CONTENT}" \
-          --data-urlencode "uid=${WXPUSHER_USER_IDS}" \
-          --data-urlencode "url=${URL}"
+        # 发送 POST 请求
+        curl -X POST ${{ env.WXPUSHER_URL }} \
+          -d "app_token=${{ secrets.WXPUSHER_APP_TOKEN }}" \
+          -d "content=内核版本: ${{ steps.kernel_version.outputs.KERNEL_VERSION }}" \
+          -d "summary=OpenWrt 编译完成" \
+          -d "uids=${{ secrets.WXPUSHER_USER_IDS }}"
