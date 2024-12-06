@@ -23,12 +23,17 @@ jobs:
         run: |
           echo "Kernel version value is: ${{ steps.kernel_version.outputs.KERNEL_VERSION }}"
 
-      # Step 3: 调试条件语句的评估
+      # Step 3: 调试 WXPUSHER_URL
+      - name: Debug WXPUSHER_URL
+        run: |
+          echo "WXPUSHER_URL starts with: ${{ secrets.WXPUSHER_URL | slice(0, 20) }}"
+
+      # Step 4: 调试条件语句的评估
       - name: Debug condition evaluation
         run: |
           echo "Evaluating if condition: '${{ steps.kernel_version.outputs.KERNEL_VERSION }}' != ''"
 
-      # Step 4: 如果 KERNEL_VERSION 不为空，发送到 wxPusher
+      # Step 5: 如果 KERNEL_VERSION 不为空，发送到 wxPusher
       - name: Send kernel version to wxPusher
         if: steps.kernel_version.outputs.KERNEL_VERSION != ''
         run: |
