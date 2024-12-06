@@ -1,45 +1,31 @@
-name: Kernel Version Check
+name: Send Message via GET API
 
 on:
+  # 你可以根据需要设置触发条件
   push:
     branches:
       - main
+  # 你也可以设置按时间间隔定时触发
+  schedule:
+    - cron: '0 9 * * *'  # 每天 9 点触发
 
 jobs:
-  build:
+  send-message:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: 获取内核版本并设置输出
-      - name: Get Kernel Version
-        id: kernel_version
-        run: |
-          KERNEL_VERSION=$(uname -r)  # 获取内核版本
-          echo "KERNEL_VERSION=$KERNEL_VERSION" >> $GITHUB_ENV  # 设置环境变量
-          echo "::set-output name=KERNEL_VERSION::$KERNEL_VERSION"  # 设置输出
+    - name: Check out repository
+      uses: actions/checkout@v2
 
-      # Step 2: 输出 KERNEL_VERSION 的值以进行调试
-      - name: Debug Kernel Version
-        run: |
-          echo "Kernel version value is: ${{ steps.kernel_version.outputs.KERNEL_VERSION }}"
+    - name: Send GET request via API
+      run: |
+        APP_TOKEN="AT_qHT0cTQfLwYOlBV9cJj9zDSyEmspsmyM"
+        CONTENT="Hello World"
+        UID="c1BcpqxEbD8irqlGUh9BhOqR2BvH8yWZ"
+        URL="http%3a%2f%2fwxpusher.zjiecode.com"  # URL编码后的链接
 
-      # Step 3: 调试 WXPUSHER_URL
-      - name: Debug WXPUSHER_URL
-        run: |
-          echo "WXPUSHER_URL starts with: ${{ secrets.WXPUSHER_URL }}"
-
-      # Step 4: 调试条件语句的评估
-      - name: Debug condition evaluation
-        run: |
-          echo "Evaluating if condition: '${{ steps.kernel_version.outputs.KERNEL_VERSION }}' != ''"
-
-      # Step 5: 如果 KERNEL_VERSION 不为空，发送到 wxPusher
-      - name: Send kernel version to wxPusher
-        if: steps.kernel_version.outputs.KERNEL_VERSION != ''
-        run: |
-          echo "Sending data to wxPusher with content: 内核版本: ${{ steps.kernel_version.outputs.KERNEL_VERSION }}"
-          curl -X POST ${{ secrets.WXPUSHER_URL }} \
-            -d 'app_token=${{ secrets.WXPUSHER_APP_TOKEN }}' \
-            -d 'content=内核版本: ${{ steps.kernel_version.outputs.KERNEL_VERSION }}' \
-            -d 'summary=OpenWrt 编译完成' \
-            -d 'uids=${{ secrets.WXPUSHER_USER_IDS }}'
+        curl -G "https://wxpusher.zjiecode.com/api/send/message/" \
+          --data-urlencode "appToken=${APP_TOKEN}" \
+          --data-urlencode "content=${CONTENT}" \
+          --data-urlencode "uid=${UID}" \
+          --data-urlencode "url=${URL}"
