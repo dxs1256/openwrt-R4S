@@ -22,6 +22,7 @@ jobs:
         WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 你的用户 ID
       run: |
         # 设置要发送的消息内容
+        summary="标题吗
         CONTENT="123"
         URL="http%3a%2f%2fwxpusher.zjiecode.com"  # URL 编码后的链接
 
