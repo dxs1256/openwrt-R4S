@@ -159,13 +159,21 @@ jobs:
         echo "- 编译完成时间: ${{ env.FILE_DATE }} " >> release.txt
 
     - name: Send kernel version to wxPusher
-      if: steps.kernel_version.outputs.KERNEL_VERSION != ''
+      env:
+        WXPUSHER_URL: 'https://wxpusher.zjiecode.com/api/send/message'
+        WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}  # 你的 WXPUSHER 应用 token
+        WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 你的用户 ID
       run: |
-        curl -X POST ${{ env.WXPUSHER_URL }} \
-          -d 'app_token=${{ env.WXPUSHER_APP_TOKEN }}' \
-          -d 'content=内核版本: ${{ env.KERNEL_VERSION }}' \
-          -d 'summary=OpenWrt 编译完成' \
-          -d 'uids=${{ env.WXPUSHER_USER_IDS }}'
+        # 设置要发送的消息内容
+        CONTENT="内核版本: ${{ env.KERNEL_VERSION }}"
+        URL="http%3a%2f%2fwxpusher.zjiecode.com"  # URL 编码后的链接
+
+        # 发送 GET 请求到指定用户
+        curl -G "$WXPUSHER_URL" \
+          --data-urlencode "appToken=${WXPUSHER_APP_TOKEN}" \
+          --data-urlencode "content=${CONTENT}" \
+          --data-urlencode "uid=${WXPUSHER_USER_IDS}" \
+          --data-urlencode "url=${URL}"
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
