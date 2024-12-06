@@ -26,7 +26,7 @@ jobs:
       # Step 3: 调试 WXPUSHER_URL
       - name: Debug WXPUSHER_URL
         run: |
-          echo "WXPUSHER_URL starts with: ${{ secrets.WXPUSHER_URL }}
+          echo "WXPUSHER_URL starts with: ${{ secrets.WXPUSHER_URL }}"
 
       # Step 4: 调试条件语句的评估
       - name: Debug condition evaluation
