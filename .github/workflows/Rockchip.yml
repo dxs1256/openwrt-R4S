@@ -150,7 +150,7 @@ jobs:
         WXPUSHER_USER_IDS: ${{ secrets.WXPUSHER_USER_IDS }}  # 你的用户 ID
       run: |
         # 设置要发送的消息内容
-        CONTENT="OpenWrt编译完成，内核版本: ${{ env.KERNEL_VERSION }}"
+        CONTENT="内核版本: ${{ env.KERNEL_VERSION }}"
         URL="http%3a%2f%2fwxpusher.zjiecode.com"  # URL 编码后的链接
 
         # 发送 GET 请求到指定用户
