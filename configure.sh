@@ -10,6 +10,3 @@ git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git  package/le
 
 # 修改主机名字，把 OpenWRT 修改你喜欢的就行（不能纯数字或者使用中文）
 #sed -i '/uci commit system/i\uci set system.@system[0].hostname='OpenWRT'' package/lean/default-settings/files/zzz-default-settings
-
-# 设置密码为8695245
-# sed -i 's@CYXluq4wUazHjmCDBCqXF*@3Ux/KOyfvq2f.BYn9aV0p1@g' package/lean/default-settings/files/zzz-default-settings
