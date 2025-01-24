@@ -2,7 +2,7 @@
 ⏰ **每周自动拉取最新源码自动编译**
 
 插件清单：
-# Applications
+### Applications
 CONFIG_PACKAGE_luci-app-accesscontrol=y
 CONFIG_PACKAGE_luci-app-adguardhome=y
 CONFIG_PACKAGE_luci-app-aliyundrive-webdav=y
