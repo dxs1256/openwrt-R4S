@@ -6,6 +6,7 @@
 | AdGuard Home       | `luci-app-adguardhome`       |
 | 阿里云盘 WebDAV   | `luci-app-aliyundrive-webdav`  |
 | Aria2 下载       | `luci-app-aria2`              |
+| 自动重启         | `luci-app-autoreboot`         |
 | 磁盘管理         | `luci-app-diskman`            |
 | Docker 管理       | `luci-app-dockerman`          |
 | 防火墙           | `luci-app-firewall`           |
@@ -13,6 +14,5 @@
 | 网络带宽监控     | `luci-app-nlbwmon`            |
 | PassWall          | `luci-app-passwall`           |
 | 推送机器人         | `luci-app-pushbot`            |
-| 统一文件共享          | `luci-app-unishare`            |
 | Turbo ACC 加速     | `luci-app-turboacc`           |
-| 自动重启         | `luci-app-autoreboot`         |
+| 统一文件共享          | `luci-app-unishare`            |
