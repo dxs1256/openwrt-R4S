@@ -1,18 +1,18 @@
+## ⏰ 每周自动拉取最新源码自动编译
 
-⏰ **每周自动拉取最新源码自动编译**
-
-插件清单：
-* `CONFIG_PACKAGE_luci-app-accesscontrol=y`
-* `CONFIG_PACKAGE_luci-app-adguardhome=y`
-* `CONFIG_PACKAGE_luci-app-aliyundrive-webdav=y`
-* `CONFIG_PACKAGE_luci-app-aria2=y`
-* `CONFIG_PACKAGE_luci-app-diskman=y`
-* `CONFIG_PACKAGE_luci-app-dockerman=y`
-* `CONFIG_PACKAGE_luci-app-firewall=y`
-* `CONFIG_PACKAGE_luci-app-frpc=y`
-* `CONFIG_PACKAGE_luci-app-nlbwmon=y`
-* `CONFIG_PACKAGE_luci-app-passwall=y`
-* `CONFIG_PACKAGE_luci-app-pushbot=y`
-* `CONFIG_PACKAGE_luci-app-unishare=y`
-* `CONFIG_PACKAGE_luci-app-turboacc=y`
-* `CONFIG_PACKAGE_luci-app-autoreboot=y`
+| 功能             | 插件名称                       |
+| ---------------- | ------------------------------ |
+| 访问控制         | `luci-app-accesscontrol`      |
+| AdGuard Home       | `luci-app-adguardhome`       |
+| 阿里云盘 WebDAV   | `luci-app-aliyundrive-webdav`  |
+| Aria2 下载       | `luci-app-aria2`              |
+| 磁盘管理         | `luci-app-diskman`            |
+| Docker 管理       | `luci-app-dockerman`          |
+| 防火墙           | `luci-app-firewall`           |
+| Frpc 内网穿透     | `luci-app-frpc`              |
+| 网络带宽监控     | `luci-app-nlbwmon`            |
+| PassWall          | `luci-app-passwall`           |
+| 推送机器人         | `luci-app-pushbot`            |
+| Unishare          | `luci-app-unishare`            |
+| Turbo ACC 加速     | `luci-app-turboacc`           |
+| 自动重启         | `luci-app-autoreboot`         |
