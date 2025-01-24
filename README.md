@@ -13,6 +13,6 @@
 | 网络带宽监控     | `luci-app-nlbwmon`            |
 | PassWall          | `luci-app-passwall`           |
 | 推送机器人         | `luci-app-pushbot`            |
-| Unishare          | `luci-app-unishare`            |
+| 统一文件共享          | `luci-app-unishare`            |
 | Turbo ACC 加速     | `luci-app-turboacc`           |
 | 自动重启         | `luci-app-autoreboot`         |
